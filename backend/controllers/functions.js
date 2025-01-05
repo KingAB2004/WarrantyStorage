@@ -43,7 +43,6 @@ const bcrypt =require('bcrypt');
 
 const fetchingdetails=async(req,res)=>{
 
-    console.log(req.body.isMerchant)
     if(req.body.isMerchant)
     {
         try {
@@ -51,10 +50,8 @@ const fetchingdetails=async(req,res)=>{
             if(output.length===0){
                 return res.status(404).json({success:false,"msg":"user not found"})
             }
-            console.log(output[0].password)
             const user = { email:req.body.email}; // Example user (this should be retrieved from your database)
             const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
-            console.log(token)
             const data={
                 "hashed":output[0].password,
                 "token":token,
@@ -62,7 +59,6 @@ const fetchingdetails=async(req,res)=>{
                 "StoreName":output[0].business_name,
                 "WorkNumber":output[0].work_phone,
             }
-            console.log(data)
             res.status(200).json(data)
             
         } catch (error) {
@@ -77,15 +73,12 @@ const fetchingdetails=async(req,res)=>{
             if(output.length===0){
                 return res.status(404).json({success:false,"msg":"user not found"})
             }
-            console.log(output[0].password)
             const user = { email:req.body.email}; // Example user (this should be retrieved from your database)
             const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
-            console.log(token)
             const data={
                 "hashed":output[0].password,
                 "token":token
             }
-            console.log(data)
             res.status(200).json(data)
             
         } catch (error) {
@@ -95,7 +88,6 @@ const fetchingdetails=async(req,res)=>{
 }
 
 const addingnewmerchantuser=async (req,res) => {
-    // console.log("Trying to add")
     let unhashedpassword=(req.body.password)
     const saltRounds=10
     salt=bcrypt.genSaltSync(saltRounds)
@@ -111,9 +103,7 @@ const addingnewmerchantuser=async (req,res) => {
             "business_type":req.body.business_type,
             "password":hashed
         }
-        // console.log(merchantuserinfo)
         const task=await Merchant.create(merchantuserinfo)
-        // console.log(task)
         res.status(200).json({task})
     }
     catch(error){
@@ -122,7 +112,6 @@ const addingnewmerchantuser=async (req,res) => {
 }
 const uploadwarranty = async (req, res) => {
         if (!req.file) {
-            // console.log("Done")
             return res.status(400).json({ message: 'File is required.' });
         }
     try {
@@ -137,7 +126,6 @@ const uploadwarranty = async (req, res) => {
             "invoice": req.file.buffer, 
             "status": 'Pending Verification', 
         };
-        // console.log('Warranty Data:', newWarranty);
         const task = await UserWarranty.create(newWarranty);
         res.status(200).send({ message: 'Warranty uploaded and awaiting verification.' });
     } catch (error) {
@@ -150,7 +138,6 @@ const uploadwarranty = async (req, res) => {
 const getWarranty = async (req, res) => {
     try {
         const warranty = await UserWarranty.find({ email: req.body.email });
-        // console.log(warranty)
         res.status(200).json(warranty);
     } catch (error) {
         res.status(500).send(error);
@@ -160,7 +147,6 @@ const getWarranty = async (req, res) => {
 // Contact Us page
 // 
 const Contact =asyncWrapper(async(req ,res)=>{
-    // console.log("hello")
     const task = await ContactUs.create(req.body)
     const mailData = {
         from:process.env.Email ,  // sender address
@@ -192,7 +178,6 @@ const Contact =asyncWrapper(async(req ,res)=>{
 
 
 const rejectionmail =asyncWrapper(async(req ,res)=>{
-    // console.log("hello")
     const message=req.body.message;
     const emailuser=req.body.email;
     const product_name=req.body.product_name;
@@ -247,12 +232,10 @@ const fetchvalidations = async (req, res) => {
 
         // Fetch the warranties based on store_name and store_location\
         let output;
-        console.log(status)
         if(status!=='All' && status!==null){
             output = await UserWarranty.find({ store_name, store_location, status });
         }
         else{
-            console.log("Here")
             output = await UserWarranty.find({ store_name, store_location});
         }
 
@@ -293,18 +276,10 @@ const updatewarrantystatus = async (req, res) => {
         const { status } = req.body; 
         let {month,year}=req.body;
         let {currdate}=req.body
-        // const updatedWarranty = await UserWarranty.findByIdAndUpdate(
-        //     id,
-        //     { status },
-        //     { new: true } 
-        // );
         let date = new Date(currdate);
         date.setFullYear(date.getFullYear() +Number(year) );
-        // console.log(date.getFullYear() +year )
         date.setMonth(date.getMonth() + Number(month));
         date=date.toISOString().split('T')[0];
-        // console.log(date);
-        console.log(status)
         if(status==='rejected'){
             date='NA'
         }
@@ -330,7 +305,6 @@ const updatewarrantystatus = async (req, res) => {
 // Adding Forget Password apis
 
 const OTP =asyncWrapper(async(req ,res)=>{
-    console.log(req.body)
     const mailData = {
         from:process.env.Email ,  // sender address
         to: req.body.email,    // list of receivers
@@ -369,7 +343,6 @@ const UpdatePassword=async (req,res) => {
     const hashed=bcrypt.hashSync(unhashedpassword,salt)
     try{
         const task=await UserLogin.findOneAndUpdate({email} ,{password:hashed})
-        console.log(hashed)
         res.status(201).json({task});
 
     }
@@ -389,7 +362,6 @@ const UpdateExpiry=async (req,res) => {
     const {year ,month ,ID} =req.body
     try{
         const task=await UserLogin.findOne({ID})
-        console.log(task.data)
         let date = new Date(inputDate);
       date.setFullYear(date.getFullYear() +year );
       date.setMonth(date.getMonth() + month);

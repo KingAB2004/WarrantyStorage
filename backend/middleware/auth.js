@@ -14,7 +14,6 @@ const authenticationMiddleware = (req, res, next) => {
   try {
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('Decoded Token:', decoded);
     res.send({email:decoded.email})
     next();
   } catch (error) {

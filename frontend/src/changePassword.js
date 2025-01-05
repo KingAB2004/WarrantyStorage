@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom"; // Hook for navigation
+import { useNavigate } from "react-router-dom"; 
 import axios from 'axios';
 function ChangePassword() {
     const [password, setPassword] = useState('');
@@ -16,7 +16,6 @@ function ChangePassword() {
                 password:confirmPassword
             });
             navigate("/login")
-            console.log('hello')
             alert('Password changed successfully');
         } else {
             console.error('Passwords do not match');

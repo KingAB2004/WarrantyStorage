@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom"; // Hook for navigation
+import { useNavigate } from "react-router-dom";
 import { colors } from '@mui/material';
 import axios from "axios";
 
@@ -14,16 +14,12 @@ function OTPVerification() {
     const sendMail=async()=>{
         randint = await Math.floor(1000 + Math.random() * 9000);
         setGeneratedOtp(randint)
-        console.log(randint)
         await axios.post("http://localhost:5000/warranty/setup/OTP", {
             email:email,
             num:randint
         });
     }
     
-    // React.useEffect(()=>{
-        // } ,[])
-        // <body></body>
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,7 +33,6 @@ function OTPVerification() {
         }
 
     };
-    // window.addEventListener('load', sendMail());
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100" >
             <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>

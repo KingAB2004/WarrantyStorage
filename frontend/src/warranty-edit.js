@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import CheckAuthAndRedirect from './jwt_auth';
 
 const WarrantyList = () => {
-  CheckAuthAndRedirect(); // Call the function to handle redirection based on token
+  CheckAuthAndRedirect(); 
 
   const [warranties, setWarranties] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
@@ -22,7 +22,6 @@ const WarrantyList = () => {
     status: "Pending Verification",
   });
 
-// let email =""
 
 
 let data
@@ -34,9 +33,7 @@ const fetchWarranties = async () => {
   try {
     data =await localStorage.getItem("Data");
     setNewWarranty((prev) => ({ ...prev, email: data }));
-    console.log(data);
     const response = await axios.post("http://localhost:5000/warranty/setup/getwarranty" ,{"email":data});
-      console.log(newWarranty.email)
       setWarranties(response.data);
     } catch (error) {
       console.error("Error fetching warranties:", error);
@@ -60,7 +57,6 @@ const fetchWarranties = async () => {
   const handleFormSubmit = async () => {
     try {
 
-      console.log("Warranty added:", newWarranty);
       
       const response = await axios.post("http://localhost:5000/warranty/setup/createwarranty", newWarranty,{
         headers: {
@@ -70,7 +66,6 @@ const fetchWarranties = async () => {
       fetchWarranties();
 
 
-      // Add the new warranty to the list and show confirmation
       setWarranties((prev) => [...prev, response.data]);
       setOpenSnackbar(true);
 
@@ -147,7 +142,6 @@ const fetchWarranties = async () => {
         </TableContainer>
       </Box>
 
-      {/* Add Warranty Dialog */}
       <Dialog open={openDialog} onClose={handleDialogClose} fullWidth maxWidth="sm">
         <DialogTitle>Add New Warranty</DialogTitle>
         <DialogContent>
@@ -202,7 +196,6 @@ const fetchWarranties = async () => {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar for success message */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom"; // Hook for navigation
+import { useNavigate } from "react-router-dom"; 
 
 function ForgotPassword() {
     const navigate =useNavigate();
@@ -9,7 +9,6 @@ function ForgotPassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Reset password request for:', userDetail);
         localStorage.setItem("email" ,userDetail)
         let randint =Math.floor(1000 + Math.random() * 9000);
         navigate("/OTP")

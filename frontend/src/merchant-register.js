@@ -2,6 +2,7 @@ import React from "react"
 import './RegisterMerchant.css';    
 import {Link} from 'react-router-dom'
 import axios from "axios";
+import Navbar from "./navbar";
 function RegisterMerchant({ togglePage }) {
 
   const [formData, setFormData] = React.useState({
@@ -17,7 +18,6 @@ function RegisterMerchant({ togglePage }) {
     terms: false,
   });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData({
@@ -26,29 +26,28 @@ function RegisterMerchant({ togglePage }) {
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Make a POST request to the backend with form data
       const response = await axios.post('http://localhost:5000/warranty/setup/addmerchant', formData);
-      console.log(response.data); 
       alert('Registration successful!');
       localStorage.setItem("IsClient" ,"NO");
       localStorage.setItem("Data" ,formData.work_email)
     } catch (error) {
-      console.error('Error registering:', error);  // Handle error
+      console.error('Error registering:', error);  
       alert('Error registering. Please try again.');
     }
   };
     return (
+      <>
+      <Navbar />
+
       <div className="register-merchant-container">
-        <div className="register-form-card">
+        <div className="register-form-card mt-2">
           <h2 className="text-center">Register Merchant</h2>
 
     <form onSubmit={handleSubmit}>
-      {/* Business Name Field */}
       <div className="form-group">
         <label htmlFor="business_name">Business Name</label>
         <input
@@ -59,10 +58,9 @@ function RegisterMerchant({ togglePage }) {
           onChange={handleChange}
           placeholder="Enter your business name"
           required
-        />
+          />
       </div>
 
-      {/* Your Name Field */}
       <div className="form-group">
         <label htmlFor="your_name">Your Name</label>
         <input
@@ -73,10 +71,9 @@ function RegisterMerchant({ togglePage }) {
           onChange={handleChange}
           placeholder="Enter your full name"
           required
-        />
+          />
       </div>
 
-      {/* Work Email Field */}
       <div className="form-group">
         <label htmlFor="work_email">Work Email</label>
         <input
@@ -87,10 +84,9 @@ function RegisterMerchant({ togglePage }) {
           onChange={handleChange}
           placeholder="Enter your work email"
           required
-        />
+          />
       </div>
 
-      {/* Alternate Phone Field */}
       <div className="form-group">
         <label htmlFor="alt_phone">Alternate Phone</label>
         <input
@@ -101,10 +97,9 @@ function RegisterMerchant({ togglePage }) {
           onChange={handleChange}
           placeholder="Enter alternate phone number"
           required
-        />
+          />
       </div>
 
-      {/* Work Phone Field */}
       <div className="form-group">
         <label htmlFor="work_phone">Work Phone</label>
         <input
@@ -118,7 +113,6 @@ function RegisterMerchant({ togglePage }) {
         />
       </div>
 
-      {/* Address Field */}
       <div className="form-group">
         <label htmlFor="business_add">Business Address</label>
         <input
@@ -132,7 +126,6 @@ function RegisterMerchant({ togglePage }) {
         />
       </div>
 
-      {/* Business Type Field */}
       <div className="form-group">
         <label htmlFor="business_type">Business Type</label>
         <select
@@ -141,7 +134,7 @@ function RegisterMerchant({ togglePage }) {
           value={formData.business_type}
           onChange={handleChange}
           required
-        >
+          >
           <option value="">Select Business Type</option>
           <option value="Retail">Retail</option>
           <option value="Service">Service</option>
@@ -150,7 +143,6 @@ function RegisterMerchant({ togglePage }) {
         </select>
       </div>
 
-      {/* Password Field */}
       <div className="form-group">
         <label htmlFor="password">Password</label>
         <input
@@ -161,10 +153,9 @@ function RegisterMerchant({ togglePage }) {
           onChange={handleChange}
           placeholder="Enter your password"
           required
-        />
+          />
       </div>
 
-      {/* Confirm Password Field */}
       <div className="form-group">
         <label htmlFor="confirm_password">Confirm Password</label>
         <input
@@ -175,10 +166,9 @@ function RegisterMerchant({ togglePage }) {
           onChange={handleChange}
           placeholder="Confirm your password"
           required
-        />
+          />
       </div>
 
-      {/* Terms and Conditions Checkbox */}
       <div className="form-group form-check">
         <input
           type="checkbox"
@@ -189,11 +179,10 @@ function RegisterMerchant({ togglePage }) {
           required
         />
         <label className="form-check-label" htmlFor="terms">
-          I agree to the <a href="#terms" className="text-primary">Terms and Conditions</a>
+          I agree to the Terms and Conditions
         </label>
       </div>
 
-      {/* Submit Button */}
       <button type="submit" className="btn btn-primary btn-block mt-3">
         Register
       </button>
@@ -204,6 +193,7 @@ function RegisterMerchant({ togglePage }) {
               </div>
         </div>
       </div>
+          </>
     );
   }
   

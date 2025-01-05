@@ -47,7 +47,6 @@ const DataValidationPage = () => {
     const handleFilterChange = async (value) => {
       temp=0;
       setFilterStatus(value);
-      // console.log(value)
       try {
         const response = await axios.post('http://localhost:5000/warranty/setup/merchantverifications', {
           store_name: store_name, 
@@ -55,7 +54,6 @@ const DataValidationPage = () => {
           status:value,
         });
         
-        // console.log("API Response:", response.data); 
   
         if (response.data.data.length > 0) { 
           setData(response.data.data);
@@ -78,7 +76,6 @@ const DataValidationPage = () => {
         status:null,
       });
       
-      // console.log("API Response:", response.data); 
 
       if (response.data.data.length > 0) { 
         setData(response.data.data);
@@ -92,17 +89,14 @@ const DataValidationPage = () => {
     }
   };
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submit behavior
+    e.preventDefault(); 
     try{
-      // console.log(formData)
       const response= await axios.post('http://localhost:5000/warranty/setup/rejectwarranty' ,formData)
-    //  alert("Message Has been sent Successfully")
      }
      catch(error)
      {
        console.log(error)
      }
-    // console.log(formData.message)
     setOpenrejectform(false);
   };
 
@@ -138,7 +132,6 @@ const DataValidationPage = () => {
           currdate:selectedItem.purchase_date,
         }
       );
-        // console.log(response.data)
         if (response.data.success) {
           setData((prevData) => 
             prevData.map((item) => 
@@ -208,7 +201,6 @@ const DataValidationPage = () => {
                 value={filterStatus}
                 onChange={(e) => 
                   handleFilterChange(e.target.value)}
-                // displayEmpty
               >
                 <MenuItem value="All">All</MenuItem>
                 <MenuItem value="Pending Verification">Pending</MenuItem>
@@ -237,9 +229,7 @@ const DataValidationPage = () => {
                 
               }
               const curstatus=row.status
-              // console.log(curstatus)
               temp++;
-              // if(curstatus!=='rejected'){  
                 return (
               
               <TableRow
@@ -303,7 +293,6 @@ const DataValidationPage = () => {
           Are you sure you want to validate this entry?
         </DialogContent>
         <div className="d-flex" style={{ maxWidth: '20rem', margin: '0 auto' }}>
-  {/* <div className="text-center"> */}
     <div className='mx-2 d-flex'>
       Year:
       <input
@@ -321,7 +310,6 @@ const DataValidationPage = () => {
         onChange={handlemonthchange}
         style={{ width: '100%' }}
       />
-    {/* </div> */}
   </div>
 </div>
 
@@ -350,8 +338,7 @@ const DataValidationPage = () => {
         <DialogTitle>Justify Rejection</DialogTitle>
         
         <div className="container d-flex justify-content-center align-items-center ">
-  {/* <div className="row w-100 justify-content-center"> */}
-    {/* <div className="col-md-6 col-lg-4"> */}
+
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow">
         <div className="form-group mb-3">
           <label htmlFor="message" className="form-label">Message</label>
@@ -370,8 +357,7 @@ const DataValidationPage = () => {
           Send
         </button>
       </form>
-    {/* </div> */}
-  {/* </div> */}
+
 </div>
 
 
@@ -394,7 +380,6 @@ const DataValidationPage = () => {
       <div></div>
     ) 
     }
-        {/* <Footer></Footer> */}
             </>
   );
 };

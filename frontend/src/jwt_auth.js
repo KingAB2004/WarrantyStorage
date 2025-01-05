@@ -8,33 +8,29 @@ const CheckAuthAndRedirect = () => {
   useEffect(() => {
     const verifyToken = async () => {
       const token = localStorage.getItem("jwt_token");
-      // console.log(token);
 
       if (!token) {
-        // Redirect to login if no token is present
         navigate("/Login");
         return;
       }
 
       try {
-        // Send a request to verify the token
         const { data } = await axios.get("http://localhost:5000/warranty/setup/id", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("Token verified. Data:", data);
       } catch (error) {
         console.error("Token verification failed:", error);
-        localStorage.removeItem("jwt_token"); // Remove invalid token
-        navigate("/Login"); // Redirect to login
+        localStorage.removeItem("jwt_token"); 
+        navigate("/Login");
       }
     };
 
     verifyToken();
   }, [navigate]);
 
-  return null; // This component is for redirection only
+  return null; 
 };
 
 export default CheckAuthAndRedirect;

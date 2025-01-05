@@ -18,7 +18,6 @@ export default function ContactUs(){
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
         try{
          const response= await axios.post('http://localhost:5000/warranty/setup/contactus' ,formData)
 
@@ -35,6 +34,8 @@ export default function ContactUs(){
         }
       };
     return(
+      <>
+      <Navbar />
         <div className="ContactUs">
           
             <div className="container my-5 d-flex justify-content-center">
@@ -74,7 +75,7 @@ export default function ContactUs(){
                   onChange={handleChange}
                   placeholder="Enter your email"
                   required
-                />
+                  />
               </div>
               <div className="mb-4">
                 <label htmlFor="message" className="form-label">
@@ -89,7 +90,7 @@ export default function ContactUs(){
                   onChange={handleChange}
                   placeholder="Type your message here"
                   required
-                ></textarea>
+                  ></textarea>
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-dark px-5 py-2 rounded-pill shadow-sm">
@@ -105,5 +106,6 @@ export default function ContactUs(){
       </div>
     </div>
         </div>
+                  </>
     )
 }

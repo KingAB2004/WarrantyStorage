@@ -1,8 +1,9 @@
 import './Login.css';
 import React from 'react';
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Hook for navigation
+import { useNavigate } from "react-router-dom"; 
 import bcrypt, { compare, compareSync } from 'bcryptjs';
+import Navbar from './navbar';
 
 function Login() {
 const navigate =useNavigate();
@@ -30,9 +31,7 @@ const navigate =useNavigate();
         {
       if(!formData.isMerchant)
       {
-        console.log(formData.isMerchent)
             const token = task.data.token;
-            // Save the token to localStorage
             localStorage.setItem("jwt_token", token);
             localStorage.setItem("Data" ,formData.email)
             navigate("/UserEdit");
@@ -42,7 +41,6 @@ const navigate =useNavigate();
           else
           {
             const token = task.data.token;
-            // Save the token to localStorage
             localStorage.setItem("jwt_token", token);
             localStorage.setItem("Data" ,formData.email)
             localStorage.setItem("SN", task.data.StoreName);
@@ -50,7 +48,6 @@ const navigate =useNavigate();
             localStorage.setItem("WN" ,task.data.WorkNumber);
             navigate("/Currentwarrantylist");
             
-            console.log("chus")
           }
         }
         
@@ -60,12 +57,13 @@ const navigate =useNavigate();
   };
 
   return (
+    <>
+    <Navbar />
     <div className="app-container">
       <div className="d-flex justify-content-center align-items-center vh-100">
         <div className="card p-4 shadow" style={{ width: '400px' }}>
           <h2 className="text-center mb-4">Login</h2>
           <form onSubmit={handleSubmit}>
-      {/* Email Field */}
       <div className="form-group">
         <label htmlFor="email">Email address</label>
         <input
@@ -79,7 +77,6 @@ const navigate =useNavigate();
         />
       </div>
 
-      {/* Password Field */}
       <div className="form-group">
         <label htmlFor="password">Password</label>
         <input
@@ -90,7 +87,7 @@ const navigate =useNavigate();
           onChange={handleChange}
           placeholder="Enter your password"
           required
-        />
+          />
         </div>
         <div className="form-group">
   <label htmlFor="isMerchant">Is Merchant</label>
@@ -105,17 +102,15 @@ const navigate =useNavigate();
         isMerchant: !prevData.isMerchant, 
       }))
     }
-  />
+    />
   <label>{formData.isMerchant ? "Yes" : "No"}</label>
 </div>
 
 
-      {/* Forgot Password Link */}
       <div className="form-group d-flex justify-content-between align-items-center">
         <a href="/ForgotPassword" className="text-primary">Forgot Password?</a>
       </div>
 
-      {/* Submit Button */}
       <button type="submit" className="btn btn-primary btn-block mt-3">
         Submit
       </button>
@@ -125,6 +120,7 @@ const navigate =useNavigate();
       </div>
     </div>
     
+    </>
   );
 }
 

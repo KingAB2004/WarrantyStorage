@@ -11,7 +11,6 @@ export default function FrontPage(props){
   function handeluserlogin(){
     props.setLogin(2);
   }
-  // const navigate = useNavigate();
   return (
         <div className="frontpage">
           <Navbar />
@@ -27,7 +26,6 @@ export default function FrontPage(props){
     </div>
     <div class="overflow-hidden">
       <div class="container px-5">
-        {/* <img src="bootstrap-docs.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy"> */}
       </div>
     </div>
   </div>
