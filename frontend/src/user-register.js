@@ -20,7 +20,7 @@ export default function Register(){
     e.preventDefault(); 
 
     try {
-await axios.post('http://localhost:5000/warranty/setup', formData);
+await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup', formData);
       alert('Form submitted successfully!');
     } catch (error) {
       console.error('Error submitting form:', error);
