@@ -14,7 +14,7 @@ function OTPVerification() {
     const sendMail=async()=>{
         randint = await Math.floor(1000 + Math.random() * 9000);
         setGeneratedOtp(randint)
-        await axios.post("http://localhost:5000/warranty/setup/OTP", {
+        await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/OTP", {
             email:email,
             num:randint
         });
