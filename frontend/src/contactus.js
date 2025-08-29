@@ -19,7 +19,7 @@ export default function ContactUs(){
       const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-         const response= await axios.post('http://localhost:5000/warranty/setup/contactus' ,formData)
+         const response= await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/contactus' ,formData)
 
          setFormData({
           name: '',
