@@ -11,7 +11,7 @@ function ChangePassword() {
         e.preventDefault();
         if (password === confirmPassword) {
             const email =await localStorage.getItem("email")
-            const task =await axios.post("http://localhost:5000/warranty/setup/UpdatePassword", {
+            const task =await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/UpdatePassword", {
                 email:email,
                 password:confirmPassword
             });
