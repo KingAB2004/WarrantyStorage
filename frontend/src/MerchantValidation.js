@@ -48,7 +48,7 @@ const DataValidationPage = () => {
       temp=0;
       setFilterStatus(value);
       try {
-        const response = await axios.post('http://localhost:5000/warranty/setup/merchantverifications', {
+        const response = await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/merchantverifications', {
           store_name: store_name, 
           store_location: store_location,
           status:value,
@@ -70,7 +70,7 @@ const DataValidationPage = () => {
   const fetchData = async () => {
     temp=0;
     try {
-      const response = await axios.post('http://localhost:5000/warranty/setup/merchantverifications', {
+      const response = await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/merchantverifications', {
         store_name: store_name, 
         store_location: store_location,
         status:null,
@@ -91,7 +91,7 @@ const DataValidationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     try{
-      const response= await axios.post('http://localhost:5000/warranty/setup/rejectwarranty' ,formData)
+      const response= await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/rejectwarranty' ,formData)
      }
      catch(error)
      {
@@ -125,7 +125,7 @@ const DataValidationPage = () => {
       
       try {
         const response = await axios.patch(
-        `http://localhost:5000/warranty/setup/merchantverifications/${selectedItem._id}`,
+        `https://warrantystoragebackend.onrender.com/setup/merchantverifications/${selectedItem._id}`,
         { status: updatedStatus ,
           year:yearexpiry,
           month:monthexpiry,
