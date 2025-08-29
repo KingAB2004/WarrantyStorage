@@ -125,7 +125,7 @@ const DataValidationPage = () => {
       
       try {
         const response = await axios.patch(
-        `https://warrantystoragebackend.onrender.com/setup/merchantverifications/${selectedItem._id}`,
+        `https://warrantystoragebackend.onrender.com/warranty/setup/merchantverifications/${selectedItem._id}`,
         { status: updatedStatus ,
           year:yearexpiry,
           month:monthexpiry,
