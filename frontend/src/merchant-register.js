@@ -30,7 +30,7 @@ function RegisterMerchant({ togglePage }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/warranty/setup/addmerchant', formData);
+      const response = await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/addmerchant', formData);
       alert('Registration successful!');
       localStorage.setItem("IsClient" ,"NO");
       localStorage.setItem("Data" ,formData.work_email)
