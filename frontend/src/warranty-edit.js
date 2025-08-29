@@ -33,7 +33,7 @@ const fetchWarranties = async () => {
   try {
     data =await localStorage.getItem("Data");
     setNewWarranty((prev) => ({ ...prev, email: data }));
-    const response = await axios.post("http://localhost:5000/warranty/setup/getwarranty" ,{"email":data});
+    const response = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/getwarranty" ,{"email":data});
       setWarranties(response.data);
     } catch (error) {
       console.error("Error fetching warranties:", error);
@@ -58,7 +58,7 @@ const fetchWarranties = async () => {
     try {
 
       
-      const response = await axios.post("http://localhost:5000/warranty/setup/createwarranty", newWarranty,{
+      const response = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/createwarranty", newWarranty,{
         headers: {
             'Content-Type': 'multipart/form-data',
         },
