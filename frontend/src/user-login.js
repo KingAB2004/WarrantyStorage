@@ -25,7 +25,7 @@ const navigate =useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const task = await axios.post("http://localhost:5000/warranty/setup/id", formData);
+      const task = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/id", formData);
       const check =compareSync(formData.password ,task.data.hashed)
       if(check)
         {
