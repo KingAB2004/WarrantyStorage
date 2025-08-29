@@ -15,7 +15,7 @@ const CheckAuthAndRedirect = () => {
       }
 
       try {
-        const { data } = await axios.get("http://localhost:5000/warranty/setup/id", {
+        const { data } = await axios.get("https://warrantystoragebackend.onrender.com/warranty/setup/id", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
