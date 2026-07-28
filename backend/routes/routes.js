@@ -30,6 +30,7 @@ router.route('/OTP').post(OTP)
 
 
 router.route('/UpdatePassword').post(UpdatePassword)
+
 // >>>>>>> 27950cdf6cf580a1ff8d31ccfd84f4e542458d33
 
 router.route('/UpdateExpiry').post(UpdateExpiry)

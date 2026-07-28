@@ -386,7 +386,4 @@ const UpdateExpiry=async (req,res) => {
 
 
 
-
-
-
 module.exports={addingnewuser,fetchingdetails,rejectionmail,addingnewmerchantuser,uploadwarranty,getWarranty ,Contact,updatewarrantystatus,fetchvalidations ,OTP ,UpdatePassword ,UpdateExpiry}
