@@ -1,0 +1,38 @@
+.premium-navbar {
+  background: linear-gradient(135deg, #1f1437, #3e1b43) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(240, 100, 197, 0.4);
+}
+
+.premium-nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  border-radius: 8px;
+  padding: 8px 15px !important;
+}
+
+.premium-nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(240, 100, 197, 0.2);
+}
+
+.premium-brand-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  background: -webkit-linear-gradient(45deg, #f064c5, #9d6cd2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.25rem;
+}
+
+.premium-toggler {
+  border-color: rgba(240, 100, 197, 0.4) !important;
+}
+
+.premium-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(240, 100, 197, 0.25) !important;
+}

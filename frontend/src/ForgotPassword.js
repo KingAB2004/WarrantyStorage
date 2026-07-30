@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom"; 
+import Navbar from './navbar';
+import './Login.css';
 
 function ForgotPassword() {
     const navigate =useNavigate();
@@ -9,36 +11,43 @@ function ForgotPassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        localStorage.setItem("email" ,userDetail)
-        let randint =Math.floor(1000 + Math.random() * 9000);
-        navigate("/OTP")
+        localStorage.setItem("email", userDetail);
+        let randint = Math.floor(1000 + Math.random() * 9000);
+        navigate("/OTP");
     };
 
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
-                <h2 className="text-center mb-3">Forgot Password</h2>
-                <p className="text-center text-muted mb-4">
-                    Enter your email address to reset your password.
-                </p>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <input
-                            type="text"
-                            name="userDetail"
-                            className="form-control"
-                            placeholder="Email"
-                            value={userDetail}
-                            onChange={(e) => setUserDetail(e.target.value)}
-                            required
-                        />
+        <div className="login-wrapper">
+            <Navbar />
+            
+            <div className="login-form-container">
+                <div className="login-glass-card">
+                    <h2 className="login-heading">Forgot Password</h2>
+                    <p className="text-center mb-4" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                        Enter your email address to reset your password.
+                    </p>
+                    
+                    <form onSubmit={handleSubmit}>
+                        <div className="login-form-group">
+                            <label className="login-label">Email Address</label>
+                            <input
+                                type="email"
+                                name="userDetail"
+                                className="form-control login-form-control"
+                                placeholder="Enter your email"
+                                value={userDetail}
+                                onChange={(e) => setUserDetail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn login-btn mt-3">
+                            Reset Password
+                        </button>
+                    </form>
+                    
+                    <div className="text-center mt-4 pt-3 border-top" style={{ borderColor: 'rgba(255,255,255,0.05) !important' }}>
+                        <a href="/login" className="login-link">Back to Sign In</a>
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">
-                        Reset Password
-                    </button>
-                </form>
-                <div className="text-center mt-3">
-                    <a href="/login" className="text-decoration-none">Back to Login</a>
                 </div>
             </div>
         </div>

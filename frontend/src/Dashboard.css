@@ -1,0 +1,79 @@
+.dashboard-wrapper {
+  background: linear-gradient(135deg, #1f1437, #3e1b43);
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 5rem;
+}
+
+.dashboard-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800 !important;
+  background: -webkit-linear-gradient(45deg, #f064c5, #9d6cd2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.dashboard-subtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+  margin-bottom: 2rem !important;
+}
+
+.dashboard-glass-table {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  overflow: hidden;
+}
+
+.dashboard-table-cell {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.dashboard-table-header {
+  color: #f064c5 !important;
+  font-weight: bold !important;
+  border-bottom: 1px solid rgba(240, 100, 197, 0.3) !important;
+}
+
+.dashboard-btn-add {
+  background: linear-gradient(45deg, #f064c5, #6f42c1) !important;
+  color: white !important;
+  border-radius: 30px !important;
+  padding: 10px 25px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 5px 15px rgba(240, 100, 197, 0.2) !important;
+}
+
+.dashboard-dialog-glass {
+  background: #2a163a !important; /* solid fallback */
+  background: rgba(35, 18, 55, 0.95) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(240, 100, 197, 0.3) !important;
+  border-radius: 15px !important;
+  color: white !important;
+}
+
+.dashboard-dialog-title {
+  color: #f064c5 !important;
+  font-weight: bold !important;
+  font-family: 'Outfit', sans-serif !important;
+}
+
+.dashboard-file-input {
+  color: white;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 1px dashed rgba(240, 100, 197, 0.5);
+  border-radius: 8px;
+  width: 100%;
+}

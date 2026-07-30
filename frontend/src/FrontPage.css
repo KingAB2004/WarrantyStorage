@@ -1,0 +1,119 @@
+.frontpage-wrapper {
+  background: linear-gradient(135deg, #1f1437, #3e1b43);
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.frontpage-hero {
+  padding: 6rem 2rem 4rem 2rem;
+  text-align: center;
+  background-image: radial-gradient(circle at center, rgba(111, 66, 193, 0.3) 0%, transparent 70%);
+}
+
+.frontpage-hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  background: -webkit-linear-gradient(45deg, #f064c5, #9d6cd2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.frontpage-hero p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.hero-btn {
+  border-radius: 30px;
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 1.1rem;
+}
+
+.hero-btn-primary {
+  background: linear-gradient(45deg, #f064c5, #6f42c1);
+  color: white;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(240, 100, 197, 0.3);
+  color: white;
+}
+
+.hero-btn-outline {
+  background: transparent;
+  color: #f064c5;
+  border: 2px solid #f064c5;
+}
+
+.hero-btn-outline:hover {
+  background: rgba(240, 100, 197, 0.15);
+  color: #f064c5;
+}
+
+.features-section {
+  padding: 5rem 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.features-title {
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 4rem;
+  color: white;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  height: 100%;
+  transition: transform 0.3s ease, background 0.3s ease;
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(240, 100, 197, 0.3);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.feature-icon-wrapper {
+  color: #f064c5;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  padding: 15px;
+  background: rgba(240, 100, 197, 0.1);
+  border-radius: 50%;
+}
+
+.feature-card h3 {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.feature-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.6;
+}

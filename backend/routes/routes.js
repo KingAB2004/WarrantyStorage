@@ -11,7 +11,7 @@ const authHeader =require('../middleware/auth')
 
 router.route('/').post(addingnewuser)
 router.route('/addmerchant').post(addingnewmerchantuser)
-router.route('/id').post(fetchingdetails).get(authHeader)
+router.route('/id').post(fetchingdetails).get(authHeader, (req, res) => res.send({ email: req.user.email }));
 
 
 

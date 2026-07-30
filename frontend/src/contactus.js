@@ -1,6 +1,9 @@
 import React from "react";
 import Navbar from "./navbar";
-import axios from "axios"
+import axios from "axios";
+import './ContactUs.css';
+import { Person, Email, Message, Send } from "@mui/icons-material";
+
 export default function ContactUs(){
     const [formData, setFormData] = React.useState({
         name: '',
@@ -33,79 +36,87 @@ export default function ContactUs(){
           console.log(error)
         }
       };
-    return(
-      <>
-      <Navbar />
-        <div className="ContactUs">
-          
-            <div className="container my-5 d-flex justify-content-center">
-      <div className="col-lg-6 col-md-8 col-sm-10">
-        <div className="card shadow-lg border-1 rounded-lg">
-          <div className="card-header text-center bg-dark text-light">
-            <h2>Contact Us</h2>
-            <p className="mb-0">We're here to help you!</p>
-          </div>
-          <div className="card-body p-5 bg-light">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="name" className="form-label">
-                  <i className="fas fa-user me-2"></i>Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your name"
-                  required
-                />
+      
+    return (
+      <div className="contact-wrapper d-flex flex-column">
+        <Navbar />
+        
+        <div className="flex-grow-1 d-flex align-items-center mb-5">
+            <div className="container contact-hero d-flex justify-content-center">
+              <div className="col-lg-6 col-md-8 col-sm-10">
+                <div className="contact-glass-panel">
+                  
+                  <div className="contact-header">
+                    <h2>Get in Touch</h2>
+                    <p>We'd love to hear from you. Send us a message!</p>
+                  </div>
+                  
+                  <div className="contact-body">
+                    <form onSubmit={handleSubmit}>
+                      <div className="mb-4 text-start">
+                        <label htmlFor="name" className="contact-label">
+                          <Person className="contact-icon"/> Name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control contact-form-control"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          placeholder="What's your name?"
+                          required
+                        />
+                      </div>
+                      
+                      <div className="mb-4 text-start">
+                        <label htmlFor="email" className="contact-label">
+                          <Email className="contact-icon"/> Email
+                        </label>
+                        <input
+                          type="email"
+                          className="form-control contact-form-control"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="Where can we reach you?"
+                          required
+                          />
+                      </div>
+                      
+                      <div className="mb-5 text-start">
+                        <label htmlFor="message" className="contact-label">
+                          <Message className="contact-icon"/> Message
+                        </label>
+                        <textarea
+                          className="form-control contact-form-control"
+                          id="message"
+                          name="message"
+                          rows="5"
+                          value={formData.message}
+                          onChange={handleChange}
+                          placeholder="How can we help?"
+                          required
+                          ></textarea>
+                      </div>
+                      
+                      <div className="text-center">
+                        <button type="submit" className="btn contact-btn-submit">
+                          Send Message <Send className="ms-2" style={{ fontSize: '1.2rem'}} />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                  
+                  <div className="contact-footer">
+                    <small>© 2024 LazyKings, Inc. All rights reserved.</small>
+                  </div>
+                  
+                </div>
               </div>
-              <div className="mb-4">
-                <label htmlFor="email" className="form-label">
-                  <i className="fas fa-envelope me-2"></i>Email
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                  required
-                  />
-              </div>
-              <div className="mb-4">
-                <label htmlFor="message" className="form-label">
-                  <i className="fas fa-comment-dots me-2"></i>Message
-                </label>
-                <textarea
-                  className="form-control"
-                  id="message"
-                  name="message"
-                  rows="5"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Type your message here"
-                  required
-                  ></textarea>
-              </div>
-              <div className="text-center">
-                <button type="submit" className="btn btn-dark px-5 py-2 rounded-pill shadow-sm">
-                  Send Message <i className="fas fa-paper-plane ms-2"></i>
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="card-footer text-center text-muted py-3">
-            <small>© 2024 LazyKings, Inc. All rights reserved.</small>
-          </div>
+            </div>
         </div>
       </div>
-    </div>
-        </div>
-                  </>
     )
 }

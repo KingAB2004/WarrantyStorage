@@ -57,70 +57,81 @@ const navigate =useNavigate();
   };
 
   return (
-    <>
-    <Navbar />
-    <div className="app-container">
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="card p-4 shadow" style={{ width: '400px' }}>
-          <h2 className="text-center mb-4">Login</h2>
+    <div className="login-wrapper">
+      <Navbar />
+      
+      <div className="login-form-container">
+        <div className="login-glass-card">
+          <h2 className="login-heading">Sign In</h2>
+          
           <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="email">Email address</label>
-        <input
-          type="email"
-          className="form-control"
-          id="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Enter your email"
-          required
-        />
-      </div>
+            <div className="login-form-group">
+              <label htmlFor="email" className="login-label">Email address</label>
+              <input
+                type="email"
+                className="form-control login-form-control"
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
 
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          className="form-control"
-          id="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Enter your password"
-          required
-          />
-        </div>
-        <div className="form-group">
-  <label htmlFor="isMerchant">Is Merchant</label>
-  <input
-    type="checkbox"
-    className="mx-2"
-    id="isMerchant"
-    checked={formData.isMerchant} 
-    onChange={() =>
-      setFormData((prevData) => ({
-        ...prevData,
-        isMerchant: !prevData.isMerchant, 
-      }))
-    }
-    />
-  <label>{formData.isMerchant ? "Yes" : "No"}</label>
-</div>
+            <div className="login-form-group">
+              <label htmlFor="password" className="login-label">Password</label>
+              <input
+                type="password"
+                className="form-control login-form-control"
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+                />
+            </div>
+              
+            <div className="login-form-group form-check d-flex align-items-center mt-3">
+              <input
+                type="checkbox"
+                className="form-check-input me-2"
+                id="isMerchant"
+                checked={formData.isMerchant} 
+                onChange={() =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    isMerchant: !prevData.isMerchant, 
+                  }))
+                }
+              />
+              <label htmlFor="isMerchant" className="form-check-label" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                I am signing in as a Merchant
+              </label>
+            </div>
 
+            <div className="d-flex justify-content-end mb-4">
+              <a href="/ForgotPassword" className="login-link text-sm" style={{ fontSize: '0.9rem' }}>Forgot Password?</a>
+            </div>
 
-      <div className="form-group d-flex justify-content-between align-items-center">
-        <a href="/ForgotPassword" className="text-primary">Forgot Password?</a>
-      </div>
+            <button type="submit" className="btn login-btn">
+              Authenticate
+            </button>
+          </form>
 
-      <button type="submit" className="btn btn-primary btn-block mt-3">
-        Submit
-      </button>
-    </form>
-    {err&&<h4>Credentials are Wrong</h4>}
+          {err ? (
+            <div className="login-error">
+              Invalid credentials provided. Please try again.
+            </div>
+          ) : null}
+          
+          <div className="text-center mt-4">
+              <p style={{ color: 'rgba(255,255,255,0.6)'}}>
+                Not registered yet? <a href="/RegisterMerchant" className="login-link ms-1">Create Account</a>
+              </p>
+          </div>
         </div>
       </div>
     </div>
-    
-    </>
   );
 }
 

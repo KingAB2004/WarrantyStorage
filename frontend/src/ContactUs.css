@@ -1,0 +1,110 @@
+.contact-wrapper {
+  background: linear-gradient(135deg, #1f1437, #3e1b43);
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.contact-hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem 1rem;
+}
+
+.contact-glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.contact-header {
+  text-align: center;
+  padding: 2.5rem 2rem 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.contact-header h2 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  background: -webkit-linear-gradient(45deg, #f064c5, #9d6cd2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.contact-header p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.contact-body {
+  padding: 3rem;
+}
+
+.contact-form-control {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 12px 15px !important;
+  transition: all 0.3s ease !important;
+}
+
+.contact-form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.contact-form-control:focus {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: #f064c5 !important;
+  box-shadow: 0 0 0 0.25rem rgba(240, 100, 197, 0.25) !important;
+}
+
+.contact-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  display: flex !important;
+  align-items: center;
+}
+
+.contact-icon {
+  color: #f064c5;
+  margin-right: 10px;
+  font-size: 1.3rem !important;
+}
+
+.contact-btn-submit {
+  background: linear-gradient(45deg, #f064c5, #6f42c1);
+  color: white !important;
+  border: none !important;
+  font-weight: 600 !important;
+  padding: 12px 30px !important;
+  border-radius: 30px !important;
+  width: 100%;
+  transition: all 0.3s ease !important;
+  font-size: 1.1rem !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(240, 100, 197, 0.3) !important;
+}
+
+.contact-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}

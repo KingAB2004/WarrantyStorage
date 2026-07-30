@@ -1,0 +1,85 @@
+.faqs-wrapper {
+  background: linear-gradient(135deg, #1f1437, #3e1b43);
+  color: white;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 5rem;
+}
+
+.faqs-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.faqs-hero-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  background: -webkit-linear-gradient(45deg, #f064c5, #9d6cd2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.faqs-hero-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.faqs-glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.faqs-accordion-item {
+  background: transparent !important;
+  border: none !important;
+  margin-bottom: 1.5rem;
+}
+
+.faqs-accordion-item .accordion-button {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.faqs-accordion-item .accordion-button:not(.collapsed) {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #f064c5 !important;
+  border-color: rgba(240, 100, 197, 0.3) !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Invert the Bootstrap accordion chevron icon to be visible on dark bg */
+.faqs-accordion-item .accordion-button::after {
+  filter: invert(1);
+}
+
+.faqs-accordion-item .accordion-button:not(.collapsed)::after {
+  filter: invert(0.6) sepia(1) saturate(3) hue-rotate(290deg);
+}
+
+.faqs-accordion-item .accordion-body {
+  color: rgba(255, 255, 255, 0.8) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+}

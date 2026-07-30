@@ -2,6 +2,8 @@ import React from "react"
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import Navbar from "./navbar";
+import './Login.css';
+
 export default function Register(){
   const [formData, setFormData] = React.useState({
     username: '',
@@ -16,77 +18,81 @@ export default function Register(){
       [name]: value
     });
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault(); 
-
     try {
-await axios.post('http://localhost:5000/warranty/setup', formData);
+      await axios.post('http://localhost:5000/warranty/setup', formData);
       alert('Form submitted successfully!');
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Error submitting form.');
     }
   };
-        return (
-          <>
-          <Navbar />
+  
+  return (
+    <div className="login-wrapper">
+      <Navbar />
 
-          <div className="app-container">
-          <div className="d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-4 shadow" style={{ width: '400px' }}>
-              <h2 className="text-center mb-4">Sign Up</h2>
+      <div className="login-form-container">
+        <div className="login-glass-card">
+          <h2 className="login-heading">Sign Up</h2>
 
-              <form onSubmit={handleSubmit} >
-  <div className="form-group">
-    <label htmlFor="username">Username</label>
-    <input
-      type="text"
-      className="form-control"
-      id="username"
-      name="username"  
-      placeholder="Enter your name"
-      value={formData.username}
-      onChange={handleChange}
-      required
-      />
-  </div>
-  <div className="form-group">
-    <label htmlFor="email">Email address</label>
-    <input
-      type="email"
-      className="form-control"
-      id="email"
-      name="email"  
-      placeholder="Enter your email"
-      value={formData.email}
-      onChange={handleChange}
-      required
-    />
-  </div>
-  <div className="form-group">
-    <label htmlFor="password">Password</label>
-    <input
-      type="password"
-      className="form-control"
-      id="password"
-      name="password"  
-      placeholder="Enter your password"
-      value={formData.password}
-      onChange={handleChange}
-      required
-      />
-  </div>
-  <button type="submit" className="btn btn-primary btn-block mt-3">
-    Sign Up
-  </button>
-</form>
-          <div className="text-center mt-3">
-            <p>Already have an account? <Link to="/login" className="text-primary">Login</Link>
+          <form onSubmit={handleSubmit} >
+            <div className="login-form-group">
+              <label htmlFor="username" className="login-label">Username</label>
+              <input
+                type="text"
+                className="form-control login-form-control"
+                id="username"
+                name="username"  
+                placeholder="Choose a username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+                />
+            </div>
+            
+            <div className="login-form-group">
+              <label htmlFor="email" className="login-label">Email address</label>
+              <input
+                type="email"
+                className="form-control login-form-control"
+                id="email"
+                name="email"  
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="login-form-group">
+              <label htmlFor="password" className="login-label">Password</label>
+              <input
+                type="password"
+                className="form-control login-form-control"
+                id="password"
+                name="password"  
+                placeholder="Create a password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                />
+            </div>
+            
+            <button type="submit" className="btn login-btn mt-3">
+              Create Account
+            </button>
+          </form>
+          
+          <div className="text-center mt-4">
+            <p style={{ color: 'rgba(255,255,255,0.6)'}}>
+              Already have an account? <Link to="/login" className="login-link ms-1">Login</Link>
             </p>
-            </div>
-            </div>
+          </div>
+        </div>
       </div>
     </div>
-      </>
-      );
-    }
+  );
+}
