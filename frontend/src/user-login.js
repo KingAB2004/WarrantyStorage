@@ -12,8 +12,8 @@ const navigate =useNavigate();
     password: "",
     isMerchant:false
   });
-  const [err ,checkerr] =React.useState(false);
-
+  const [err ,checkerr] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -24,6 +24,8 @@ const navigate =useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    checkerr(false);
     try {
       const task = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/id", formData);
       const check = bcrypt.compareSync(formData.password, task.data.hashed);
@@ -50,10 +52,11 @@ const navigate =useNavigate();
             
           }
         }
-        
-        } catch (error) {
-          checkerr(1);
-        }
+      } catch (error) {
+        checkerr(1);
+      } finally {
+        setIsLoading(false);
+      }
   };
 
   return (
@@ -113,8 +116,15 @@ const navigate =useNavigate();
               <a href="/ForgotPassword" className="login-link text-sm" style={{ fontSize: '0.9rem' }}>Forgot Password?</a>
             </div>
 
-            <button type="submit" className="btn login-btn">
-              Authenticate
+            <button type="submit" className="btn login-btn" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Waking server...
+                </>
+              ) : (
+                "Authenticate"
+              )}
             </button>
           </form>
 
