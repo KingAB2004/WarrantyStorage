@@ -2,7 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const { UserLogin, Merchant, UserWarranty, ContactUs } = require('../models/schema')
 const asyncWrapper = require('../middleware/async')
-const nodemailer = require("nodemailer")
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
 const multer = require('multer');
@@ -163,23 +164,13 @@ const Contact = asyncWrapper(async (req, res) => {
         html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>',
     };
 
-    // Create transporter using Gmail's SMTP server
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: process.env.Email,  // Your Gmail address
-            pass: process.env.Password,         // Your Gmail app password (not your account password)
-        },
-    });
-    transporter.sendMail(mailData, (error, info) => {
-        if (error) {
-            console.log('Error sending email:', error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    try {
+        await sgMail.send(mailData);
+        console.log('Email sent via SendGrid');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        if (error.response) console.error(error.response.body);
+    }
     res.status(201).json({ task });
 });
 
@@ -201,23 +192,13 @@ const rejectionmail = asyncWrapper(async (req, res) => {
         html: `<b>Hey there! </b> <br>  ${text} <br> ${message} <br> ${text2}`,
     };
 
-    // Create transporter using Gmail's SMTP server
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: process.env.Email,  // Your Gmail address
-            pass: process.env.Password,         // Your Gmail app password (not your account password)
-        },
-    });
-    transporter.sendMail(mailData, (error, info) => {
-        if (error) {
-            console.log('Error sending email:', error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    try {
+        await sgMail.send(mailData);
+        console.log('Email sent via SendGrid');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        if (error.response) console.error(error.response.body);
+    }
     res.status(201).json({ success: true });
 });
 
@@ -330,23 +311,14 @@ const OTP = asyncWrapper(async (req, res) => {
         html: `<b>Hey there!</b><br>Your OTP for Warranty Storage Password Change is ${num}<br/>`,
     };
 
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: process.env.Email,  // Your Gmail address
-            pass: process.env.Password,         // Your Gmail app password (not your account password)
-        },
-    });
-    transporter.sendMail(mailData, (error, info) => {
-        if (error) {
-            console.log('Error sending email:', error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-    // res.status(201).json({task});
+    try {
+        await sgMail.send(mailData);
+        console.log('Email sent via SendGrid');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        if (error.response) console.error(error.response.body);
+    }
+    res.status(201).json({ success: true, message: "OTP Sent" });
 });
 
 
