@@ -166,8 +166,8 @@ const Contact = asyncWrapper(async (req, res) => {
     // Create transporter using Gmail's SMTP server
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465,  // Correct SMTP port for Gmail (SSL)
-        secure: true,  // Use SSL
+        port: 587,
+        secure: false,
         auth: {
             user: process.env.Email,  // Your Gmail address
             pass: process.env.Password,         // Your Gmail app password (not your account password)
@@ -204,8 +204,8 @@ const rejectionmail = asyncWrapper(async (req, res) => {
     // Create transporter using Gmail's SMTP server
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465,  // Correct SMTP port for Gmail (SSL)
-        secure: true,  // Use SSL
+        port: 587,
+        secure: false,
         auth: {
             user: process.env.Email,  // Your Gmail address
             pass: process.env.Password,         // Your Gmail app password (not your account password)
@@ -332,8 +332,8 @@ const OTP = asyncWrapper(async (req, res) => {
 
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        port: 587,
+        secure: false,
         auth: {
             user: process.env.Email,  // Your Gmail address
             pass: process.env.Password,         // Your Gmail app password (not your account password)
