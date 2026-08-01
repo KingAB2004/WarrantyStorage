@@ -15,6 +15,8 @@ import MerchantValidation from "./MerchantValidation";
 import ForgotPassword from "./ForgotPassword";
 import OTPVerification from "./otp";
 import ChangePassword from "./changePassword";
+import Chatbot from "./Chatbot";
+
 function App() {
   return (
     <Router>
@@ -32,8 +34,10 @@ function App() {
       <Route path="/OTP" element={<OTPVerification/>}></Route>
       <Route path="/ChangePassword" element={<ChangePassword/>}></Route>
     </Routes>
+    <Chatbot />
   </Router>
   )
 }
 
 export default App;
+

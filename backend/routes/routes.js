@@ -4,6 +4,7 @@ const upload = multer();
 const router=express.Router()
 // <<<<<<< HEAD
 const {addingnewuser,fetchingdetails, addingnewmerchantuser, uploadwarranty,getWarranty ,Contact,fetchvalidations,updatewarrantystatus,  OTP, UpdatePassword,rejectionmail, UpdateExpiry}=require('../controllers/functions')
+const {chatHandler}=require('../controllers/chatbotController')
 // =======
 // const {addingnewuser,fetchingdetails, addingnewmerchantuser, uploadwarranty,getWarranty ,Contact,fetchvalidations,updatewarrantystatus,}=require('../controllers/functions')
 // >>>>>>> 27950cdf6cf580a1ff8d31ccfd84f4e542458d33
@@ -34,5 +35,7 @@ router.route('/UpdatePassword').post(UpdatePassword)
 // >>>>>>> 27950cdf6cf580a1ff8d31ccfd84f4e542458d33
 
 router.route('/UpdateExpiry').post(UpdateExpiry)
+
+router.route('/chatbot').post(chatHandler)
                             
 module.exports=router

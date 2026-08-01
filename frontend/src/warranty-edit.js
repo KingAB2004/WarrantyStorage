@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./navbar";
-import {Container,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Button,Paper,Typography,Box,Dialog,DialogTitle,DialogContent,DialogActions,TextField,Snackbar,Alert,Select,MenuItem} from "@mui/material";
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, Typography, Box, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert, Select, MenuItem } from "@mui/material";
 import { AddCircleOutline, FilterAltOff } from "@mui/icons-material";
 import { useLocation } from 'react-router-dom';
 import CheckAuthAndRedirect from './jwt_auth';
 import './Dashboard.css';
 const WarrantyList = () => {
-  CheckAuthAndRedirect(); 
+  CheckAuthAndRedirect();
 
   const [warranties, setWarranties] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const location = useLocation();
   const [newWarranty, setNewWarranty] = useState({
-    email:"",
+    email: "",
     product_name: "",
     store_name: "",
     store_location: "",
@@ -23,7 +23,7 @@ const WarrantyList = () => {
   });
 
   const [filters, setFilters] = useState({ store_name: 'All', store_location: 'All', status: 'All' });
-  
+
   const handleFilterChange = (column, value) => {
     setFilters(prev => ({ ...prev, [column]: value }));
   };
@@ -37,25 +37,25 @@ const WarrantyList = () => {
 
   const getUnique = (arr, key) => ['All', ...new Set(arr.map(item => item[key]).filter(Boolean))];
 
-  const selectStyles = { 
-    color: 'white', 
+  const selectStyles = {
+    color: 'white',
     border: '1px solid rgba(240,100,197,0.4)',
     '.MuiSvgIcon-root': { color: 'white' },
     minWidth: '130px',
     mt: 1
   };
 
-let data
-useEffect(() => {
-  
-  fetchWarranties();
-}, []);
-const fetchWarranties = async () => {
-  try {
-    data =await localStorage.getItem("Data");
-    setNewWarranty((prev) => ({ ...prev, email: data }));
-    const response = await axios.post("http://localhost:5000/warranty/setup/getwarranty" ,{"email":data, "limit": 10000});
-    setWarranties(response.data.data || []);
+  let data
+  useEffect(() => {
+
+    fetchWarranties();
+  }, []);
+  const fetchWarranties = async () => {
+    try {
+      data = await localStorage.getItem("Data");
+      setNewWarranty((prev) => ({ ...prev, email: data }));
+      const response = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/getwarranty", { "email": data, "limit": 10000 });
+      setWarranties(response.data.data || []);
     } catch (error) {
       console.error("Error fetching warranties:", error);
     }
@@ -77,7 +77,7 @@ const fetchWarranties = async () => {
 
   const handleFormSubmit = async () => {
     try {
-      
+
       const formData = new FormData();
       Object.keys(newWarranty).forEach(key => {
         if (newWarranty[key] !== null && newWarranty[key] !== undefined) {
@@ -85,9 +85,9 @@ const fetchWarranties = async () => {
         }
       });
 
-      const response = await axios.post("http://localhost:5000/warranty/setup/createwarranty", formData, {
+      const response = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/createwarranty", formData, {
         headers: {
-            'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
         },
       });
       await fetchWarranties();
@@ -146,7 +146,7 @@ const fetchWarranties = async () => {
                 value={filters.store_name}
                 onChange={(e) => handleFilterChange('store_name', e.target.value)}
                 size="small"
-                sx={{...selectStyles, mt: 0, minWidth: '150px'}}
+                sx={{ ...selectStyles, mt: 0, minWidth: '150px' }}
               >
                 {getUnique(warranties, 'store_name').map(opt => <MenuItem key={opt} value={opt}>{opt === 'All' ? 'All Stores' : opt}</MenuItem>)}
               </Select>
@@ -154,7 +154,7 @@ const fetchWarranties = async () => {
                 value={filters.store_location}
                 onChange={(e) => handleFilterChange('store_location', e.target.value)}
                 size="small"
-                sx={{...selectStyles, mt: 0, minWidth: '150px'}}
+                sx={{ ...selectStyles, mt: 0, minWidth: '150px' }}
               >
                 {getUnique(warranties, 'store_location').map(opt => <MenuItem key={opt} value={opt}>{opt === 'All' ? 'All Locations' : opt}</MenuItem>)}
               </Select>
@@ -162,15 +162,15 @@ const fetchWarranties = async () => {
                 value={filters.status}
                 onChange={(e) => handleFilterChange('status', e.target.value)}
                 size="small"
-                sx={{...selectStyles, mt: 0, minWidth: '150px'}}
+                sx={{ ...selectStyles, mt: 0, minWidth: '150px' }}
               >
                 <MenuItem value="All">All Statuses</MenuItem>
                 <MenuItem value="validated">Validated</MenuItem>
                 <MenuItem value="rejected">Rejected</MenuItem>
                 <MenuItem value="Pending Verification">Pending</MenuItem>
               </Select>
-              <Button 
-                onClick={() => setFilters({store_name: 'All', store_location: 'All', status: 'All'})}
+              <Button
+                onClick={() => setFilters({ store_name: 'All', store_location: 'All', status: 'All' })}
                 sx={{ color: '#f064c5', minWidth: 'auto', p: 1 }}
                 title="Reset Filters"
               >
@@ -225,12 +225,12 @@ const fetchWarranties = async () => {
           </TableContainer>
         </Box>
 
-        <Dialog 
-          open={openDialog} 
-          onClose={handleDialogClose} 
-          fullWidth 
+        <Dialog
+          open={openDialog}
+          onClose={handleDialogClose}
+          fullWidth
           maxWidth="md"
-          PaperProps={{ 
+          PaperProps={{
             className: "dashboard-dialog-glass",
             style: { borderRadius: '24px', padding: '16px' }
           }}
@@ -309,15 +309,15 @@ const fetchWarranties = async () => {
 
           </DialogContent>
           <DialogActions sx={{ p: 3, pt: 1, justifyContent: 'center' }}>
-            <Button 
-              onClick={handleDialogClose} 
+            <Button
+              onClick={handleDialogClose}
               sx={{ color: 'rgba(255,255,255,0.6)', mr: 2, px: 3 }}
             >
               Cancel
             </Button>
-            <Button 
-              onClick={handleFormSubmit} 
-              className="dashboard-btn-add" 
+            <Button
+              onClick={handleFormSubmit}
+              className="dashboard-btn-add"
               variant="contained"
               sx={{ px: 5 }}
             >

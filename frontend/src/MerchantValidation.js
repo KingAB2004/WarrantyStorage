@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow, 
-  Paper, 
-  Button, 
-  Dialog, 
-  DialogTitle, 
-  DialogContent, 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
   DialogActions,
   Chip, Select, MenuItem,
   Typography,
@@ -54,22 +54,21 @@ const DataValidationPage = () => {
     phone_no: phone_no,
   });
 
-  const [filters, setFilters] = useState({ store_name: 'All', store_location: 'All', status: 'All' });
+  const [filters, setFilters] = useState({ product_name: 'All', status: 'All' });
   const handleFilterChange = (column, value) => {
     setFilters(prev => ({ ...prev, [column]: value }));
   };
 
   const filteredData = data.filter(row => {
-    const matchStore = filters.store_name === 'All' || row.store_name === filters.store_name;
-    const matchLocation = filters.store_location === 'All' || row.store_location === filters.store_location;
+    const matchProduct = filters.product_name === 'All' || row.product_name === filters.product_name;
     const matchStatus = filters.status === 'All' || row.status === filters.status;
-    return matchStore && matchLocation && matchStatus;
+    return matchProduct && matchStatus;
   });
 
   const getUnique = (arr, key) => ['All', ...new Set(arr.map(item => item[key]).filter(Boolean))];
 
-  const selectStyles = { 
-    color: 'white', 
+  const selectStyles = {
+    color: 'white',
     border: '1px solid rgba(240,100,197,0.4)',
     '.MuiSvgIcon-root': { color: 'white' },
     minWidth: '130px',
@@ -78,14 +77,14 @@ const DataValidationPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/warranty/setup/merchantverifications', {
-        store_name: store_name, 
+      const response = await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/merchantverifications', {
+        store_name: store_name,
         store_location: store_location,
         status: null,
         limit: 10000
       });
 
-      if (response.data.data && response.data.data.length > 0) { 
+      if (response.data.data && response.data.data.length > 0) {
         setData(response.data.data);
       } else {
         setData([]);
@@ -97,10 +96,10 @@ const DataValidationPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    try{
-      await axios.post('http://localhost:5000/warranty/setup/rejectwarranty', formData);
-    } catch(error) {
+    e.preventDefault();
+    try {
+      await axios.post('https://warrantystoragebackend.onrender.com/warranty/setup/rejectwarranty', formData);
+    } catch (error) {
       console.error(error);
     }
     setOpenrejectform(false);
@@ -129,11 +128,11 @@ const DataValidationPage = () => {
   const handleValidation = async (validate) => {
     if (selectedItem) {
       const updatedStatus = validate ? 'validated' : 'rejected';
-      
+
       try {
         const response = await axios.patch(
-          `http://localhost:5000/warranty/setup/merchantverifications/${selectedItem._id}`,
-          { 
+          `https://warrantystoragebackend.onrender.com/warranty/setup/merchantverifications/${selectedItem._id}`,
+          {
             status: updatedStatus,
             year: yearexpiry,
             month: monthexpiry,
@@ -141,8 +140,8 @@ const DataValidationPage = () => {
           }
         );
         if (response.data.success) {
-          setData((prevData) => 
-            prevData.map((item) => 
+          setData((prevData) =>
+            prevData.map((item) =>
               item._id === selectedItem._id ? { ...item, status: updatedStatus } : item
             )
           );
@@ -152,7 +151,7 @@ const DataValidationPage = () => {
       } catch (error) {
         console.error('Error updating warranty status:', error);
       }
-      
+
       if (updatedStatus === 'rejected') {
         setFormData({
           ...formData,
@@ -178,7 +177,7 @@ const DataValidationPage = () => {
   return (
     <div className="dashboard-wrapper d-flex flex-column">
       <Navbar />
-      
+
       <Container maxWidth="xl" sx={{ pt: 4, flexGrow: 1 }}>
         <Box my={4} textAlign="center">
           <Typography variant="h3" className="dashboard-title" gutterBottom>
@@ -193,34 +192,26 @@ const DataValidationPage = () => {
           <Paper className="dashboard-glass-table" sx={{ p: 1.5, px: 3, display: 'flex', gap: 2, alignItems: 'center', borderRadius: '50px !important' }}>
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', fontWeight: 'bold' }}>FILTERS</Typography>
             <Select
-              value={filters.store_name}
-              onChange={(e) => handleFilterChange('store_name', e.target.value)}
+              value={filters.product_name}
+              onChange={(e) => handleFilterChange('product_name', e.target.value)}
               size="small"
-              sx={{...selectStyles, mt: 0, minWidth: '150px'}}
+              sx={{ ...selectStyles, mt: 0, minWidth: '150px' }}
             >
-              {getUnique(data, 'store_name').map(opt => <MenuItem key={opt} value={opt}>{opt === 'All' ? 'All Stores' : opt}</MenuItem>)}
-            </Select>
-            <Select
-              value={filters.store_location}
-              onChange={(e) => handleFilterChange('store_location', e.target.value)}
-              size="small"
-              sx={{...selectStyles, mt: 0, minWidth: '150px'}}
-            >
-              {getUnique(data, 'store_location').map(opt => <MenuItem key={opt} value={opt}>{opt === 'All' ? 'All Locations' : opt}</MenuItem>)}
+              {getUnique(data, 'product_name').map(opt => <MenuItem key={opt} value={opt}>{opt === 'All' ? 'All Products' : opt}</MenuItem>)}
             </Select>
             <Select
               value={filters.status}
               onChange={(e) => handleFilterChange('status', e.target.value)}
               size="small"
-              sx={{...selectStyles, mt: 0, minWidth: '150px'}}
+              sx={{ ...selectStyles, mt: 0, minWidth: '150px' }}
             >
               <MenuItem value="All">All Statuses</MenuItem>
               <MenuItem value="Pending Verification">Pending</MenuItem>
               <MenuItem value="validated">Completed</MenuItem>
               <MenuItem value="rejected">Cancelled</MenuItem>
             </Select>
-            <Button 
-              onClick={() => setFilters({store_name: 'All', store_location: 'All', status: 'All'})}
+            <Button
+              onClick={() => setFilters({ product_name: 'All', status: 'All' })}
               sx={{ color: '#f064c5', minWidth: 'auto', p: 1 }}
               title="Reset Filters"
             >
@@ -264,14 +255,14 @@ const DataValidationPage = () => {
                       key={row._id}
                       sx={{
                         '&:last-child td, &:last-child th': { border: 0 },
-                        backgroundColor: row.status === 'validated' 
-                          ? 'rgba(76, 175, 80, 0.1)' 
-                          : row.status === 'rejected' 
-                          ? 'rgba(244, 67, 54, 0.1)' 
-                          : 'transparent'
+                        backgroundColor: row.status === 'validated'
+                          ? 'rgba(76, 175, 80, 0.1)'
+                          : row.status === 'rejected'
+                            ? 'rgba(244, 67, 54, 0.1)'
+                            : 'transparent'
                       }}
                     >
-                      <TableCell className="dashboard-table-cell">{row._id.substring(0,6)}...</TableCell>
+                      <TableCell className="dashboard-table-cell">{row._id.substring(0, 6)}...</TableCell>
                       <TableCell className="dashboard-table-cell">{row.email}</TableCell>
                       <TableCell className="dashboard-table-cell">{row.product_name}</TableCell>
                       <TableCell className="dashboard-table-cell">{row.purchase_date}</TableCell>
@@ -279,15 +270,15 @@ const DataValidationPage = () => {
                       <TableCell className="dashboard-table-cell">{row.store_name}</TableCell>
                       <TableCell className="dashboard-table-cell">{row.store_location}</TableCell>
                       <TableCell className="dashboard-table-cell">
-                        <Chip 
+                        <Chip
                           label={row.status}
                           color={getStatusColor(row.status || 'pending')}
                           size="small"
                         />
                       </TableCell>
                       <TableCell className="dashboard-table-cell">
-                        <a 
-                          href={`data:${fileType};base64,${row.invoice}`} 
+                        <a
+                          href={`data:${fileType};base64,${row.invoice}`}
                           download={`invoice.${fileExtension}`}
                           style={{ color: '#f064c5', textDecoration: 'none' }}
                         >
@@ -295,9 +286,9 @@ const DataValidationPage = () => {
                         </a>
                       </TableCell>
                       <TableCell className="dashboard-table-cell" align="center">
-                        {row.status === 'Pending Verification' ? (  
-                          <Button 
-                            variant="contained" 
+                        {row.status === 'Pending Verification' ? (
+                          <Button
+                            variant="contained"
                             className="dashboard-btn-add"
                             size="small"
                             onClick={() => handleValidationPrompt(row)}
@@ -318,12 +309,12 @@ const DataValidationPage = () => {
             </Table>
           </TableContainer>
         )}
-        
+
         {/* Validation Dialog */}
         <Dialog
           open={openDialog}
           onClose={() => setOpenDialog(false)}
-          PaperProps={{ 
+          PaperProps={{
             className: "dashboard-dialog-glass",
             style: { borderRadius: '24px', padding: '10px' }
           }}
@@ -355,16 +346,16 @@ const DataValidationPage = () => {
             </Box>
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'center', p: 3, pt: 1 }}>
-            <Button 
-              onClick={() => handleValidation(false)} 
+            <Button
+              onClick={() => handleValidation(false)}
               color="error"
               variant="outlined"
               sx={{ px: 4, borderRadius: '20px' }}
             >
               Reject
             </Button>
-            <Button 
-              onClick={() => handleValidation(true)} 
+            <Button
+              onClick={() => handleValidation(true)}
               color="success"
               variant="contained"
               sx={{ px: 4, borderRadius: '20px', background: 'linear-gradient(45deg, #4caf50, #81c784)' }}
@@ -378,7 +369,7 @@ const DataValidationPage = () => {
         <Dialog
           open={openrejectform}
           onClose={() => setOpenrejectform(false)}
-          PaperProps={{ 
+          PaperProps={{
             className: "dashboard-dialog-glass",
             style: { borderRadius: '24px', padding: '16px' }
           }}

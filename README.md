@@ -1,77 +1,103 @@
+# 🛡️ Warranty Storage - MERN Stack Project
 
-# Warranty Storage - MERN Stack Project
+## 📌 Overview
+Warranty Storage is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to help merchants and customers securely manage and verify warranty information.
+It provides **secure authentication, warranty management, OTP-based password reset, an advanced Context-Aware AI Chatbot, and a premium glassmorphism UI**, making the warranty process more reliable and interactive. 
 
-## Overview
-Warranty Storage is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to help merchants manage and verify warranty information for their customers. The application includes user authentication, secure password hashing, and a streamlined process for warranty verification.
+🔗 **Deployed Link:** [Warranty Storage Platform](https://warranty-storage-wh5d.vercel.app/) 
+🔗 **GitHub Repository:** [Warranty Storage](https://github.com/KingAB2004/WarrantyStorage)
 
-## Features
+## 📸 Screenshots
+*(Save your UI images to the `/screenshots/` directory and they will appear here)*
 
-### 1. **User Authentication**
-- **Register/Login:** Users can register an account and log in securely.
-- **Password Hashing:** User passwords are hashed using `bcrypt` to ensure security.
-- **Session Management:** JWT (JSON Web Tokens) is used for managing user sessions.
+<p align="center">
+  <img src="screenshots/dashboard.png" width="45%" alt="Dashboard View" />
+  &nbsp;
+  <img src="screenshots/chatbot.png" width="45%" alt="AI Chatbot Interaction" />
+</p>
+<p align="center">
+  <img src="screenshots/login.png" width="45%" alt="Glassmorphism Login" />
+  &nbsp;
+  <img src="screenshots/merchant.png" width="45%" alt="Merchant Verification" />
+</p>
 
-### 2. **Warranty Management**
-- **Add Warranty:** Merchants can add warranty information for customers.
-- **View Warranties:** Merchants can view all stored warranties.
-- **Verify Warranty:** Customers can submit their warranty details for verification by merchants.
+---
 
-### 3. **OTP Verification**
-- **Password Reset:** Users can request a password reset, and an OTP (One-Time Password) is sent to their registered email.
-- **OTP Validation:** OTP is validated before allowing the user to reset their password.
+## ✨ Features
 
-### 4. **Secure APIs**
-- **Protected Routes:** APIs are secured with middleware to ensure only authenticated users have access.
+### 🤖 Context-Aware AI Chatbot (RAG)
+- **Live Context Injection:** Answers questions based on the active user/merchant's real-time warranty database.
+- **Role-Based Intelligence:** Dynamically adapts its responses depending on whether the user is a client or merchant.
+- **Real-Time Streaming:** Seamless typewriter-effect UI using Server-Sent Events (SSE).
+- **Bulletproof Integration:** Uses low-level `https` tunnels to bypass Cloudflare/WAF drops and ensure stable connectivity to the LLM.
 
-### 5. **Responsive Design**
-- Built with React and Bootstrap to ensure a seamless user experience across devices.
+### 🔐 User Authentication
+- **Register/Login:** Secure account creation and role-based login (Client vs Merchant). 
+- **Password Hashing:** User passwords are hashed using browser-compatible `bcryptjs`. 
+- **JWT Authentication:** JSON Web Tokens for secure session persistence. 
+- **OTP Verification:** `nodemailer` driven secure password resets.
 
-## Tech Stack
+### 📄 Warranty Management & Filtering
+- **Dynamic Dashboards:** Real-time multi-column data filtering (by Store, Location, Status).
+- **Add Warranty:** Merchants can instantly issue warranties for customers. 
+- **View Warranties:** Merchants and Clients possess separated, strictly isolated data scopes.
+- **Verify Warranty:** Customers can submit details for verification. 
+
+### 📱 Premium Responsive Design
+- Built with **React + Bootstrap + Modern CSS** leveraging vibrant colors and dynamic glassmorphism components.
+- Completely mobile friendly with global floating chat widget availability.
+
+---
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- React
+- React (React Router v6)
+- Vanilla CSS (Glassmorphism & Micro-animations)
 - Bootstrap
+- React Markdown (Render stream logic)
 
 ### Backend
-- Node.js
-- Express.js
+- Node.js & Express.js
+- MongoDB (via Mongoose)
+- Native `https` streaming standard
 
-### Database
-- MongoDB (NoSQL database)
+### AI & Third-Party APIs
+- **Groq API**: High-speed AI inference running `llama-3.1-8b-instant`.
+- Axios – API requests 
+- bcryptjs – Password hashing 
+- nodemailer – Email/OTP functionality 
+- dotenv – Environment variable management 
 
-### Other Tools
-- Axios: For making API requests
-- Mongoose: For interacting with MongoDB
-- bcrypt: For password hashing
-- nodemailer: For sending emails (OTP functionality)
-- dotenv: For managing environment variables
+---
 
-## Installation
+## ⚡ Installation & Setup
 
 ### Prerequisites
-- Node.js
-- npm (Node Package Manager)
-- MongoDB instance (local or cloud)
+- [Node.js](https://nodejs.org/) 
+- [MongoDB](https://www.mongodb.com/) (local or cloud instance)
+- A [Groq API Key](https://console.groq.com/) for the AI Chatbot
 
-### Steps to Set Up Locally
+### Steps
 
-1. **Clone the Repository:**
+1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/warranty-storage.git
-   cd warranty-storage
+   git clone https://github.com/KingAB2004/WarrantyStorage.git
+   cd WarrantyStorage
    ```
 
-2. **Set Up Environment Variables:**
-   Create a `.env` file in the root directory of the backend project and include:
+2. **Set Up Environment Variables** 
+   Create a `.env` file in the **backend** folder: 
    ```env
    PORT=5000
-   MONGO_URI=<your-mongo-db-connection-string>
+   URI=<your-mongo-db-connection-string>
    JWT_SECRET=<your-jwt-secret>
-   EMAIL=<your-email-address>
-   PASSWORD=<your-email-password>
+   EMAIL=<your-gmail-address>
+   PASSWORD=<your-gmail-app-password>
+   Api_key=<your-groq-api-key>
    ```
 
-3. **Install Dependencies:**
+3. **Install Dependencies**
    - Backend:
      ```bash
      cd backend
@@ -83,56 +109,44 @@ Warranty Storage is a full-stack MERN (MongoDB, Express, React, Node.js) applica
      npm install
      ```
 
-4. **Start the Application:**
-   - Start the backend server:
+4. **Run the Application**
+   - Start backend (runs on `:5000`):
      ```bash
      cd backend
      npm run dev
      ```
-   - Start the frontend server:
+   - Start frontend (runs on `:3000`):
      ```bash
      cd frontend
      npm start
      ```
 
-5. **Access the Application:**
-   Open your browser and navigate to `http://localhost:3000`.
-
-## Folder Structure
-```
-project-root/
-|-- backend/
-|   |-- controllers/       # Business logic for routes
-|   |-- models/            # Mongoose schemas
-|   |-- routes/            # API routes
-|   |-- middleware/        # Middleware functions (auth, etc.)
-|   |-- utils/             # Helper functions (e.g., for OTP/email)
-|   |-- server.js          # Entry point for backend
-|
-|-- frontend/
-|   |-- src/
-|       |-- components/    # React components
-|       |-- pages/         # Application pages (e.g., Login, Register, Dashboard)
-|       |-- App.js         # Main React app component
-|       |-- index.js       # Entry point for React
-|
-|-- README.md              # Documentation
-```
-
-
-## Future Enhancements
-- Add support for multiple user roles (e.g., merchants, customers).
-- Enable push notifications for OTP and updates.
-- Integrate cloud storage for warranty documents.
-- Enhance reporting and analytics for merchants.
-
-## Contributing
-We welcome contributions! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch for your feature.
-3. Commit your changes and push to the branch.
-4. Submit a pull request for review.
-
+5. **Access the App** 
+   Open [http://localhost:3000](http://localhost:3000) in your browser. 
+   *(Note: For local testing, ensure the frontend `axios` and API endpoints point to `http://localhost:5000` instead of the production URLs)*
 
 ---
-Thank you for using Warranty Storage!
+
+## 🚀 Future Enhancements
+- Fine-tuned Embeddings / Vector Database for RAG scaling.
+- Push notifications for OTP and warranty updates. 
+- Cloud storage for uploading warranty documents. 
+- Advanced analytics & reporting for merchants. 
+
+---
+
+## 🤝 Contributing
+We welcome contributions! 
+1. Fork the repo 
+2. Create a new branch (`feature/your-feature-name`) 
+3. Commit your changes 
+4. Push your branch and create a Pull Request 
+
+---
+
+## 📜 License
+This project is open-source and available under the [MIT License](LICENSE). 
+
+---
+
+💡 *Thank you for using Warranty Storage!* 

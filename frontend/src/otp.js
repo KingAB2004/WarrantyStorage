@@ -9,17 +9,17 @@ import './Login.css';
 
 function OTPVerification() {
     const [otp, setOtp] = useState('');
-    const [generatedOtp, setGeneratedOtp] = useState(null); 
+    const [generatedOtp, setGeneratedOtp] = useState(null);
     const [Wrong, setWrong] = useState(false);
     const navigate = useNavigate();
     const email = localStorage.getItem("email");
     const hasFetched = useRef(false);
-    
-    const sendMail = async() => {
+
+    const sendMail = async () => {
         const randomNum = Math.floor(1000 + Math.random() * 9000);
         setGeneratedOtp(randomNum);
         try {
-            await axios.post("http://localhost:5000/warranty/setup/OTP", {
+            await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/OTP", {
                 email: email,
                 num: randomNum
             });
@@ -37,7 +37,7 @@ function OTPVerification() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(generatedOtp === parseInt(otp)) {
+        if (generatedOtp === parseInt(otp)) {
             localStorage.setItem("verifiedOtp", otp);
             navigate("/ChangePassword");
         } else {
@@ -48,14 +48,14 @@ function OTPVerification() {
     return (
         <div className="login-wrapper">
             <Navbar />
-            
+
             <div className="login-form-container">
                 <div className="login-glass-card">
                     <h2 className="login-heading">OTP Verification</h2>
                     <p className="text-center mb-4" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
                         Please enter the 4-digit OTP sent to your registered email.
                     </p>
-                    
+
                     <form onSubmit={handleSubmit}>
                         <div className="login-form-group">
                             <input
@@ -70,7 +70,7 @@ function OTPVerification() {
                                 required
                             />
                         </div>
-                        
+
                         <button type="submit" className="btn login-btn mt-3">
                             Verify Identity
                         </button>

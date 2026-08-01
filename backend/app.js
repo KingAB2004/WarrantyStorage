@@ -3,7 +3,7 @@ const express=require('express')
 const cors =require('cors')
 const app=express()
 require('dotenv').config()
-app.use(express.json()); //dont forget ot add this in future
+app.use(express.json({ limit: '1mb' })); //dont forget ot add this in future
 app.use(cors())
 const route=require('./routes/routes')
 const connectDB=require('./database/connectdb')

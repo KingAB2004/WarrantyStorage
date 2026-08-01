@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from './navbar';
 import './Login.css';
@@ -9,16 +9,16 @@ function ChangePassword() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [Wrong, setWrong] = useState(false);
-    const navigate =useNavigate();
+    const navigate = useNavigate();
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password === confirmPassword) {
             setWrong(false);
             try {
                 const email = await localStorage.getItem("email");
                 const otpCode = await localStorage.getItem("verifiedOtp");
-                const task = await axios.post("http://localhost:5000/warranty/setup/UpdatePassword", {
+                const task = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/UpdatePassword", {
                     email: email,
                     password: confirmPassword,
                     otp: otpCode
@@ -71,13 +71,13 @@ function ChangePassword() {
                             Confirm Change
                         </button>
                     </form>
-                    
+
                     {Wrong && (
                         <div className="login-error mt-4">
                             Passwords do not match. Please try again.
                         </div>
                     )}
-                    
+
                 </div>
             </div>
         </div>

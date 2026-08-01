@@ -2,7 +2,7 @@ import './Login.css';
 import React from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
-import bcrypt, { compare, compareSync } from 'bcryptjs';
+import bcrypt from 'bcryptjs/dist/bcrypt';
 import Navbar from './navbar';
 
 function Login() {
@@ -25,8 +25,8 @@ const navigate =useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const task = await axios.post("http://localhost:5000/warranty/setup/id", formData);
-      const check =compareSync(formData.password ,task.data.hashed)
+      const task = await axios.post("https://warrantystoragebackend.onrender.com/warranty/setup/id", formData);
+      const check = bcrypt.compareSync(formData.password, task.data.hashed);
       if(check)
         {
       if(!formData.isMerchant)
