@@ -8,7 +8,6 @@ It provides **secure authentication, warranty management, OTP-based password res
 🔗 **GitHub Repository:** [Warranty Storage](https://github.com/KingAB2004/WarrantyStorage)
 
 ## 📸 Screenshots
-*(Save your UI images to the `/screenshots/` directory and they will appear here)*
 
 <p align="center">
   <img src="screenshots/dashboard.png" width="45%" alt="Dashboard View" />
