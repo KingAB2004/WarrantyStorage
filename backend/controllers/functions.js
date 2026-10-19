@@ -8,6 +8,8 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken')
 const multer = require('multer');
 const verifyToken = require('../middleware/auth')
+const cache = require('../cache/redis')
+const { publish } = require('../queue/rabbit')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -126,6 +128,7 @@ const uploadwarranty = async (req, res) => {
             "status": 'Pending Verification',
         };
         const task = await UserWarranty.create(newWarranty);
+        await cache.delPattern(`warranties:${cache.escapeKey(email)}:*`)
         res.status(200).send({ message: 'Warranty uploaded and awaiting verification.' });
     } catch (error) {
         console.error(error);
@@ -139,14 +142,22 @@ const getWarranty = async (req, res) => {
         const page = parseInt(req.body.page) || 1;
         const limit = parseInt(req.body.limit) || 10;
         const skip = (page - 1) * limit;
+        const key = `warranties:${req.body.email}:${page}:${limit}`;
+
+        const cached = await cache.get(key);
+        if (cached) return res.status(200).json(cached);
 
         const warranty = await UserWarranty.find({ email: req.body.email })
+            .select('-invoice')
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .lean();
 
         const total = await UserWarranty.countDocuments({ email: req.body.email });
 
-        res.status(200).json({ data: warranty, total, page, limit });
+        const result = { data: warranty, total, page, limit };
+        await cache.set(key, result, 120);
+        res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error);
     }
@@ -165,8 +176,8 @@ const Contact = asyncWrapper(async (req, res) => {
     };
 
     try {
-        await sgMail.send(mailData);
-        console.log('Email sent via SendGrid');
+        await publish('email', mailData);
+        console.log('Email queued');
     } catch (error) {
         console.error('Error sending email:', error);
         if (error.response) console.error(error.response.body);
@@ -193,8 +204,8 @@ const rejectionmail = asyncWrapper(async (req, res) => {
     };
 
     try {
-        await sgMail.send(mailData);
-        console.log('Email sent via SendGrid');
+        await publish('email', mailData);
+        console.log('Email queued');
     } catch (error) {
         console.error('Error sending email:', error);
         if (error.response) console.error(error.response.body);
@@ -276,7 +287,8 @@ const updatewarrantystatus = async (req, res) => {
         if (status === 'rejected') {
             date = 'NA'
         }
-        await UserWarranty.findByIdAndUpdate(id, { expiry_date: date, status }, { new: true })
+        const task = await UserWarranty.findByIdAndUpdate(id, { expiry_date: date, status }, { new: true }).select('email')
+        if (task) await cache.delPattern(`warranties:${cache.escapeKey(task.email)}:*`)
 
 
         res.status(200).json({ success: true });
@@ -312,8 +324,8 @@ const OTP = asyncWrapper(async (req, res) => {
     };
 
     try {
-        await sgMail.send(mailData);
-        console.log('Email sent via SendGrid');
+        await publish('email', mailData);
+        console.log('Email queued');
     } catch (error) {
         console.error('Error sending email:', error);
         if (error.response) console.error(error.response.body);

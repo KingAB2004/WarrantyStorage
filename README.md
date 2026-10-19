@@ -5,6 +5,10 @@
   <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express.js" />
   <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
   <img src="https://img.shields.io/badge/AI-Groq-orange?style=for-the-badge" alt="Groq AI" />
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis" />
+  <img src="https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white" alt="RabbitMQ" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions" />
   
   <br />
   <br />
@@ -74,13 +78,21 @@ Featuring a premium **glassmorphism user interface**, **OTP-powered authenticati
 > *Role-based scopes with rigorous session management*
 * **Segregated Roles**: Explicit workflows & zero data-leakage between Merchants and Clients.
 * **Cryptographic Security**: Hashed passwords (`bcryptjs`) & JSON Web Tokens (JWT).
-* **OTP Reset**: NodeMailer powered one-time-passcode pipelines for seamless account recovery.
+* **OTP Reset**: SendGrid powered one-time-passcode emails, delivered through a RabbitMQ queue with automatic retries.
 
 ### 📊 **Advanced Warranty Management**
 > *Everything you need, right where you need it*
 * **Real-time Filtering**: Hyper-fast, multi-column search by Store, Location, and Status.
 * **Instant Issuance**: Merchants can generate and bind warranties to customers in seconds.
 * **Frictionless Verification**: Customers securely submit credentials to check real-time warranty validity.
+
+### ⚙️ **Infrastructure & DevOps**
+> *Fast reads, reliable emails, reproducible builds*
+* **Redis Caching**: Warranty lists are served from Redis (cache-aside, 120s TTL) and invalidated on every write.
+* **RabbitMQ Email Queue**: All emails are queued and sent by a background worker with 5 retries and a dead-letter queue.
+* **Docker**: One command (`docker compose up`) starts the backend, Redis and RabbitMQ locally.
+* **CI/CD**: GitHub Actions checks, builds and deploys every push to `main` through a Render deploy hook.
+* **Graceful Fallback**: Without `REDIS_URL` or `AMQP_URL` the app runs exactly as before (no cache, direct email).
 
 <br/>
 
@@ -92,6 +104,7 @@ Featuring a premium **glassmorphism user interface**, **OTP-powered authenticati
       <th>Frontend UI & UX</th>
       <th>Backend & Database</th>
       <th>AI & Integrations</th>
+      <th>Infrastructure & DevOps</th>
     </tr>
     <tr>
       <td valign="top">
@@ -113,7 +126,15 @@ Featuring a premium **glassmorphism user interface**, **OTP-powered authenticati
         <ul>
           <li><b>Groq API</b> (Llama 3.1)</li>
           <li><b>Bcrypt.js</b> & JWT</li>
-          <li><b>Nodemailer</b></li>
+          <li><b>SendGrid</b> (HTTP API)</li>
+        </ul>
+      </td>
+      <td valign="top">
+        <ul>
+          <li><b>Redis</b> (ioredis)</li>
+          <li><b>RabbitMQ</b> (amqplib)</li>
+          <li><b>Docker</b> & Compose</li>
+          <li><b>GitHub Actions</b></li>
         </ul>
       </td>
     </tr>
@@ -122,14 +143,30 @@ Featuring a premium **glassmorphism user interface**, **OTP-powered authenticati
 
 <br/>
 
+## 🏗️ Architecture
+
+```
+Browser ──▶ Vercel (React) ──HTTPS──▶ Render: Express API ──▶ MongoDB Atlas
+                                         │   ├─ cache/redis.js ──────▶ Redis (Upstash)
+                                         │   ├─ queue/rabbit.js ─────▶ RabbitMQ (CloudAMQP)
+                                         │   └─ queue/emailWorker.js ◀─ "email" queue ──▶ SendGrid
+GitHub push ──▶ GitHub Actions: check ─▶ build ─▶ docker build ─▶ Render deploy hook
+```
+
+A full explanation of what each piece is, how it works and why it was chosen is in **[docs/INFRASTRUCTURE_GUIDE.md](docs/INFRASTRUCTURE_GUIDE.md)**.
+
+<br/>
+
 ## ⚡ Quick Start
 
 Follow these steps to spin up the environment locally.
 
 ### 1️⃣ Prerequisites
-- **Node.js** (v16+)
+- **Node.js** (v20+, v22 recommended)
 - **MongoDB** (Atlas or local instance)
 - **Groq API Key** (Get it [here](https://console.groq.com/))
+- **SendGrid API Key** for emails
+- *Optional:* **Docker** + Compose, **Redis**, **RabbitMQ** (the app works without them)
 
 ### 2️⃣ Installation & Setup
 
@@ -143,15 +180,19 @@ cd WarrantyStorage
 
 #### **Configure Environment Variables**
 
-Create a `.env` file within the `backend/` directory:
+Create a `.env` file in `backend/` (copy `backend/.env.example`):
 
 ```env
 PORT=5000
 URI=<your-mongo-connection-string>
 JWT_SECRET=<your-super-secret-key>
-EMAIL=<your-gmail-address>
-PASSWORD=<your-gmail-app-password>
+Email=<your-verified-sender-email>
+SENDGRID_API_KEY=<your-sendgrid-api-key>
 Api_key=<your-groq-api-key>
+
+# Optional: leave empty to disable
+REDIS_URL=<redis:// or rediss:// url>
+AMQP_URL=<amqp:// or amqps:// url>
 ```
 
 #### **Install Dependencies**
@@ -189,10 +230,44 @@ npm start
 
 > **Note**: For local testing, ensure any frontend API calls use base URLs pointing to `http://localhost:5000` instead of the production Vercel endpoints.
 
+### 4️⃣ Running with Docker (backend + Redis + RabbitMQ)
+
+```bash
+# from the project root, with backend/.env filled in
+docker compose up --build
+```
+
+| Service | URL |
+|---|---|
+| Backend API | `http://localhost:5000` (health: `/health`) |
+| RabbitMQ dashboard | `http://localhost:15672` (user `warranty`, pass `warranty`) |
+| Redis | `localhost:6379` |
+
+Compose sets `REDIS_URL` and `AMQP_URL` for the backend automatically. MongoDB still comes from `URI` in `backend/.env`.
+
+<br/>
+
+## 🔁 CI/CD Pipeline
+
+Every push and pull request runs `.github/workflows/ci.yml`:
+
+| Job | What it does |
+|---|---|
+| `backend` | `npm ci` + syntax check of every backend file |
+| `frontend` | `npm ci` + production build |
+| `docker` | Builds the backend Docker image |
+| `deploy` | On `main` only: calls the Render deploy hook |
+
+**One-time setup:** in Render, turn **Auto-Deploy off** and copy the **Deploy Hook URL**. In GitHub, add it as the repository secret `RENDER_DEPLOY_HOOK_URL`. Vercel keeps deploying the frontend on its own.
+
 <br/>
 
 ## 🚀 Future Roadmap
 
+- [x] **Redis Caching Layer**
+- [x] **RabbitMQ Message Queue** for emails
+- [x] **Docker Containerization**
+- [x] **CI/CD Pipeline** with GitHub Actions
 - [ ] **Vector Database Migration:** Scale RAG capabilities with Chroma/Pinecone.
 - [ ] **Web Push Notifications:** Real-time push alerts for expiring warranties & OTPs.
 - [ ] **S3 Document Storage:** Cloud-hosted PDF receipts and warranty policy uploads.
