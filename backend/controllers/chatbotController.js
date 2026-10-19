@@ -129,7 +129,7 @@ const chatHandler = async (req, res) => {
         res.flushHea        // Call OpenAI streaming API
         const https = require('https');
         const reqData = JSON.stringify({
-            model: 'llama-3.1-8b-instant',
+            model: 'openai/gpt-oss-20b',
             messages: messages,
             stream: true,
             temperature: 0.7,
